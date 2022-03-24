@@ -2,5 +2,8 @@ FROM balenablocks/bluetooth
 
 WORKDIR /usr/src
 
+COPY rtl8761b_fw.bin lib/rtl8761b_fw.bin
+COPY rtl8761b_config.bin lib/rtl8761b_config.bin
+
 COPY start.sh /usr/src/
 CMD [ "/bin/bash", "/usr/src/start.sh" ]
