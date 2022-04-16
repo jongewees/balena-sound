@@ -5,9 +5,10 @@ if [[ -n "$SOUND_DISABLE_BLUETOOTH" ]]; then
   exit 0
 fi
 
-#LET OP: geen spatie tussen remount en rw, dus 'remount,rw' ipv 'remount, rw'
-#LET OP: remounten van folders kan alleen als ze al een keer gemount zijn, dus wel /lib/firmware maar niet /lib/firmware/rtl_bt/
-#Als het remounten niet lukt, krijg je tijdens het deployen van de image op de device fouten als 'can´t create rtl8761b_fw.bin' 
+#NOTE:
+# no space between remount and rw, so 'remount,rw' instead of 'remount, rw'
+# remounting folders is only possible when they have been mounted before, so you can mount /lib/firmware but not /lib/firmware/rtl_bt/
+# if mounting fails, errors during deployment of the image will be like 'cannot create rtl8761b_fw.bin' 
 mount -o remount,rw /lib/firmware
 
 #set MOUNTCMD=mount -o remount, rw /
@@ -15,8 +16,6 @@ mount -o remount,rw /lib/firmware
 
 mkdir -p /lib/firmware/rtl_bt/
 
-cp /usr/src/lib/rtl8761b_fw.bin /lib/firmware/rtl_bt/
-
-cp /usr/src/lib/rtl8761b_config.bin /lib/firmware/rtl_bt/
+cp /usr/src/lib/rtl8761b_*.bin /lib/firmware/rtl_bt/
 
 exec /usr/src/bluetooth-agent
